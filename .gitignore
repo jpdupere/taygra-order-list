@@ -1,3 +1,4 @@
 secret.json
-
 /output/**
+**/node_modules
+.DS_Store
