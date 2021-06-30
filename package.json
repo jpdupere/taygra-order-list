@@ -1,0 +1,16 @@
+{
+  "name": "taygra-order-list",
+  "version": "1.0.0",
+  "description": "Fetch a list of orders from the shopify API and generates a list of items to ship along with the order number and customer email",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jean-Philippe Dupéré",
+  "license": "ISC",
+  "dependencies": {
+    "csv-writer": "^1.6.0",
+    "node-fetch": "^2.6.1"
+  }
+}
