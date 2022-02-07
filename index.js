@@ -11,7 +11,7 @@ const fields = [
     'customer',
     'line_items',
 ]
-const apiUrl = 'taygra-shoes.myshopify.com/admin/api/2021-04/'; 
+const apiUrl = 'taygra-shoes.myshopify.com/admin/api/2022-01/'; 
 const brazilLocationId = 63141773507;
 
 const buildOrderUrl = () => {
