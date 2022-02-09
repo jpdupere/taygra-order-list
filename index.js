@@ -72,6 +72,12 @@ const updateDb = async () => {
     // override the db with the new line-items
     db.write(newDbState);
     console.log('Local database updated');
+
+    const delay = 3600 * 1000;
+    setTimeout(async () => {
+        await updateDb();
+    }, delay);
+    console.log(`Next run in ${delay/1000/60} min`);
 }
 
 (async () => {
