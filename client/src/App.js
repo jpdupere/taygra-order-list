@@ -16,7 +16,6 @@ function App() {
   const fetchLineItems = async () => {
     const res = await fetch('/line-items')
     const li = await res.json();
-    console.log(li);
     setLineItems(li);
     setTimeout(() => fetchLineItems(), 3600*1000); //Line items will refresh every hour
   }
@@ -25,37 +24,41 @@ function App() {
     fetchLineItems();
   }, []);
 
-  const handleReserve = async (uid, qty = 1) => {
-    setLineItems(lineItems.map(li => li.uid === uid ? {...li, reservedQty: li.reservedQty + qty} : li));
+  const adjustQty = (lineItem, adjustments, revert) => {
+    const multiplier = revert ? -1 : 1;
+    Object.entries(adjustments).forEach(([key, val]) => {
+      lineItem[key] += val * multiplier;
+    });
+    return lineItem;
+  }
+
+  const handleAdjust = async (uid, adjustments) => {
+    setLineItems(lineItems.map(li => li.uid === uid ? adjustQty(li, adjustments) : li));
     const response = await fetch(`/line-items/${uid}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({reserve: qty})
+      body: JSON.stringify(adjustments)
     });
     for (let i = 0; i < 10000; i++){}
     if (response.status !== 200) {
-      return setLineItems(lineItems.map(li => li.uid === uid ? {...li, reservedQty: li.reservedQty - qty} : li));
+      return setLineItems(lineItems.map(li => li.uid === uid ? adjustQty(li, adjustments, true) : li));
     };
   }
 
-  const handleSend = async (uid, qty = 1) => {
-    setLineItems(lineItems.map(li => li.uid === uid ? {...li, sentQty: li.sentQty + qty} : li));
-    const response = await fetch(`/line-items/${uid}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({reserve: qty})
-    });
-    if (response.status !== 200) {
-      return setLineItems(lineItems.map(li => li.uid === uid ? {...li, sentQty: li.sentQty - qty} : li));
-    };
-  }
-
-  const listItems = lineItems.map(lineItem => 
-    <LineItem key={lineItem.uid.replace('.jpg', '_150x.jpg')} lineItem={lineItem} handleReserve={handleReserve} handleSend={handleSend}></LineItem>
+  const listItems = lineItems.sort((a, b) => {
+    const sentA = a.sentQty === a.qty && a.reservedQty === 0;
+    const sentB = b.sentQty === b.qty && b.reservedQty === 0;
+    if ((sentA && sentB) || (!sentA && !sentB)) {
+      return b.uid.localeCompare(a.uid);
+    } else if (sentA) {
+      return 1;
+    } else {
+      return -1;
+    }
+  }).map(lineItem => 
+    <LineItem key={lineItem.uid.replace('.jpg', '_150x.jpg')} lineItem={lineItem} handleAdjust={handleAdjust}></LineItem>
   );
 
   return (

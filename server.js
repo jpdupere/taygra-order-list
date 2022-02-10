@@ -1,4 +1,5 @@
-const db = require('./db.js');
+const { getLineItems, adjustQty } = require('./db.js');
+require('./update-data');
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
@@ -8,7 +9,7 @@ app.get('/backend', (req, res) => {
 });
 
 app.get('/line-items', (req, res) => {
-    const data = Object.entries(db.read()).map(([uid, order]) => {
+    const data = Object.entries(getLineItems()).map(([uid, order]) => {
         return {
             uid, 
             number: order.number,
@@ -28,16 +29,14 @@ app.use(express.json());
 app.post('/line-items/:uid', (req, res) => {
     const uid = req.params.uid;
     if (!uid) {
-        res.status(400).send();
+        return res.status(400).send();
     }
-    const qty = req.body;
-    if (qty !== 1) {
-        res.status(400).send();
+    const data = req.body;
+    if (!data.reservedQty && !data.sentQty) {
+        return res.status(400).send();
     }
-    // Update the db file
-    
-
-    res.status(500).send();
+    adjustQty(uid, data);
+    res.status(200).send();
 })
 
 app.listen(port, () => {
