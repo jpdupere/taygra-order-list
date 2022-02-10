@@ -7,6 +7,7 @@ import { CSVLink } from 'react-csv';
 
 function App() {
   const [lineItems, setLineItems] = useState([]);
+  const [hideSent, setHideSent] = useState(true);
 
   const theme = createTheme({
     palette: {
@@ -48,17 +49,7 @@ function App() {
     };
   }
 
-  const listItems = lineItems.sort((a, b) => {
-    const sentA = a.sentQty === a.qty && a.reservedQty === 0;
-    const sentB = b.sentQty === b.qty && b.reservedQty === 0;
-    if ((sentA && sentB) || (!sentA && !sentB)) {
-      return b.uid.localeCompare(a.uid);
-    } else if (sentA) {
-      return 1;
-    } else {
-      return -1;
-    }
-  }).map(lineItem => 
+  const listItems = lineItems.filter(li => !(li.sentQty === li.qty && li.reservedQty === 0) || !hideSent).sort((a, b) => b.uid.localeCompare(a.uid)).map(lineItem => 
     <LineItem key={lineItem.uid.replace('.jpg', '_150x.jpg')} lineItem={lineItem} handleAdjust={handleAdjust}></LineItem>
   );
 
@@ -74,11 +65,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Grid container justifyContent="center" spacing={2} sx={{padding: '1em', paddingBottom: '5em'}}>
+      <Grid container justifyContent="center" spacing={2} sx={{paddingBottom: '5em'}}>
       <Grid item>
-      <Paper elevation={3}>
-      <List>{listItems}</List>
-      </Paper>
+      <List dense={true}>{listItems}</List>
       </Grid>
       </Grid>
       <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
@@ -91,6 +80,7 @@ function App() {
           >
             TAYGRA USA - COMMANDES
           </Typography>
+          <Button onClick={() => setHideSent(!hideSent)}>{`${hideSent ? 'Afficher' : 'Masquer'} les commandes envoyées`}</Button>
           <CSVLink data={exportData} filename={"commande-taygra-usa.csv"} className={'no-decoration'}><Button color="secondary">Exporter CSV</Button></CSVLink>
         </Toolbar>
       </AppBar>

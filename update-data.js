@@ -53,8 +53,12 @@ const updateDb = async () => {
     // add the lineItems from the original localDb that don't exist in the new db but have reservedQty
     const db = getLineItems();
     for (const lineItemUid in db) {
-        if (!lineItems[lineItemUid] && db[lineItemUid].reservedQty === 0) {
-            removeLineItem(lineItemUid);
+        if (!lineItems[lineItemUid]) {
+            if (db[lineItemUid].reservedQty === 0) {
+                removeLineItem(lineItemUid);
+            } else {
+                updateLineItem(lineItemUid, {qty: 0});
+            }
         }
     }
 

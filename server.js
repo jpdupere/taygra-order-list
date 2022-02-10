@@ -2,11 +2,9 @@ const { getLineItems, adjustQty } = require('./db.js');
 require('./update-data');
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 80;
 
-app.get('/backend', (req, res) => {
-    res.send('Backend connected to React');
-});
+app.use(express.static("client/build"));
 
 app.get('/line-items', (req, res) => {
     const data = Object.entries(getLineItems()).map(([uid, order]) => {
