@@ -60,14 +60,13 @@ function App() {
     }
     return lines;
   });
-  console.log(exportData)
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Grid container justifyContent="center" spacing={2} sx={{paddingBottom: '5em'}}>
-      <Grid item>
-      <List dense={true}>{listItems}</List>
+      <Grid item xs={12}>
+      <List sx={{maxWidth: '700px', margin: '0 auto'}} dense={false}>{listItems}</List>
       </Grid>
       </Grid>
       <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
@@ -81,7 +80,7 @@ function App() {
             TAYGRA USA - COMMANDES
           </Typography>
           <Button onClick={() => setHideSent(!hideSent)}>{`${hideSent ? 'Afficher' : 'Masquer'} les commandes envoyées`}</Button>
-          <CSVLink data={exportData} filename={"commande-taygra-usa.csv"} className={'no-decoration'}><Button color="secondary">Exporter CSV</Button></CSVLink>
+          <CSVLink data={exportData} onClick={() => exportData.length ? true : false} filename={"commande-taygra-usa.csv"} className={'no-decoration'}><Button color="secondary" disabled={!exportData.length}>Exporter CSV</Button></CSVLink>
         </Toolbar>
       </AppBar>
     </ThemeProvider>
