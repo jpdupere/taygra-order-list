@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react';
 import List from '@mui/material/List';
 import LineItem from './Components/LineItem';
 import { ThemeProvider, createTheme, CssBaseline, Container, Card, Grid, Paper, AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { CSVLink } from 'react-csv';
 
 function App() {
   const [lineItems, setLineItems] = useState([]);
@@ -61,6 +62,15 @@ function App() {
     <LineItem key={lineItem.uid.replace('.jpg', '_150x.jpg')} lineItem={lineItem} handleAdjust={handleAdjust}></LineItem>
   );
 
+  const exportData = lineItems.filter(li => li.reservedQty > 0).flatMap(li => {
+    const lines = []
+    for (let i = 0; i < li.reservedQty; i++) {
+      lines.push({OrderNumber: li.number, SKU: li.sku});
+    }
+    return lines;
+  });
+  console.log(exportData)
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -81,7 +91,7 @@ function App() {
           >
             TAYGRA USA - COMMANDES
           </Typography>
-          <Button>Exporter CSV</Button>
+          <CSVLink data={exportData} filename={"commande-taygra-usa.csv"} className={'no-decoration'}><Button color="secondary">Exporter CSV</Button></CSVLink>
         </Toolbar>
       </AppBar>
     </ThemeProvider>
