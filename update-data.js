@@ -74,10 +74,11 @@ const smoothlyUpdateDb = async () => {
 
 (async () => {
     await smoothlyUpdateDb();
-
     const delay = 30 * 60 * 1000; // 30 min
+    console.log(`Next run: ${new Date(Date.now() + delay).toString()}`);
+
     setInterval(async () => {
         await smoothlyUpdateDb();
-        console.log(`Next run: ${new Date(date.now() + delay).toString()}`);
+        console.log(`Next run: ${new Date(Date.now() + delay).toString()}`);
     }, delay);
 })()
