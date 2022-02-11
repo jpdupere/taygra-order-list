@@ -61,14 +61,23 @@ const updateDb = async () => {
             }
         }
     }
+}
 
-    const delay = 3600 * 1000;
-    setTimeout(async () => {
+// Wrap the updateDb function so that any error thrown will silently abort the current update and wait for the next one.
+const smoothlyUpdateDb = async () => {
+    try {
         await updateDb();
-    }, delay);
-    console.log(`Next run in ${delay/1000/60} min`);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 (async () => {
-    await updateDb();
+    await smoothlyUpdateDb();
+
+    const delay = 30 * 60 * 1000; // 30 min
+    setInterval(async () => {
+        await smoothlyUpdateDb();
+        console.log(`Next run: ${new Date(date.now() + delay).toString()}`);
+    }, delay);
 })()
