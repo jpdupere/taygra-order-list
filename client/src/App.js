@@ -2,7 +2,7 @@ import './App.css';
 import {useState, useEffect} from 'react';
 import List from '@mui/material/List';
 import LineItem from './Components/LineItem';
-import { ThemeProvider, createTheme, CssBaseline, Container, Card, Grid, Paper, AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { ThemeProvider, createTheme, CssBaseline,Grid, AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { CSVLink } from 'react-csv';
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
 
   useEffect(() => {
     fetchLineItems();
-  }, []);
+  }, [fetchLineItems]);
 
   const adjustQty = (lineItem, adjustments, revert) => {
     const multiplier = revert ? -1 : 1;

@@ -93,7 +93,7 @@ function LineItem({lineItem, handleAdjust, handleSetNote}) {
                 {getSentStatus()}
             {noteMode 
             ? <TextField autoFocus size='small' onKeyDown={handleNoteKeyDown} onChange={handleNoteChange} onBlur={() => handleSave(note)} id="outlined-basic" label="Note" variant="outlined" value={note} />
-            : note ? <Alert severity='info' onClick={() => handleSetNoteMode(true)} onClose={() => handleSave('')}>
+            : note ? <Alert severity='info' sx={{width:'fit-content'}} onClick={() => handleSetNoteMode(true)} onClose={() => handleSave('')}>
                 {note}
             </Alert> : null}
             </Box>
