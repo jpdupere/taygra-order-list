@@ -2,13 +2,18 @@ import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ListItemText from '@mui/material/ListItemText';
-import { Badge, Button, Chip, Divider } from '@mui/material';
+import { Alert, Badge, Button, Chip, Divider, TextField } from '@mui/material';
 import { Box } from '@mui/system';
+import { useEffect, useState } from 'react';
 
-function lineItem({lineItem, handleAdjust}) {
-    const reqQty = `Qté: ${lineItem.qty}`;
-    const reservedQty = lineItem.qty === 1 ? 'Mise de côté' : lineItem.reservedQty > 1 ? `${lineItem.reservedQty} mise${lineItem.reservedQty > 1 ? 's' : ''} de côté`: '';
-    const sentQty = lineItem.sentQty === 1 ? 'Envoyée' : lineItem.sentQty > 1 ? `${lineItem.sentQty} envoyées`: '';
+function LineItem({lineItem, handleAdjust, handleSetNote}) {
+    const [noteMode, setNoteMode] = useState(false);
+    const [note, setNote] = useState(lineItem.note || '');
+
+    useEffect(() => {
+      setNote(lineItem.note || '');
+    }, [lineItem.note]);
+    
 
     const getSentStatus = () => {
         if (lineItem.sentQty > 0) {
@@ -54,7 +59,25 @@ function lineItem({lineItem, handleAdjust}) {
         }
     }
 
-    const text = `${reqQty} ${lineItem.reservedQty > 0 ? `- ${reservedQty}` : ''}${lineItem.sentQty > 0 ? `, ${sentQty}` : ''}`
+    const handleSetNoteMode = (newNoteMode) => {
+        setNoteMode(newNoteMode);
+    }
+
+    const handleNoteChange = (evt) => {
+        setNote(evt.target.value);
+    }
+
+    const handleNoteKeyDown = (evt) => {
+        if (evt.code === 'Enter') {
+            handleSave(note);
+        }
+    }
+
+    const handleSave = async (newNote) => {
+        const savedNote = await handleSetNote(lineItem.uid, newNote);
+        setNoteMode(false);
+        setNote(savedNote);
+    }
 
     return (
         <>
@@ -65,10 +88,15 @@ function lineItem({lineItem, handleAdjust}) {
             </Badge>
             </ListItemAvatar>
             <Box sx={{flex: '1 1 auto'}}>
-            <ListItemText sx={{wordBreak: 'break-all'}} primary={`${lineItem.number}`} secondary={lineItem.sku} />
+            <ListItemText onClick={() => handleSetNoteMode(true)} sx={{wordBreak: 'break-all'}} primary={`${lineItem.number}`} secondary={lineItem.sku} />
                 {getReservedStatus()}    
                 {getSentStatus()}
-            </Box>            
+            {noteMode 
+            ? <TextField autoFocus size='small' onKeyDown={handleNoteKeyDown} onChange={handleNoteChange} onBlur={() => handleSave(note)} id="outlined-basic" label="Note" variant="outlined" value={note} />
+            : note ? <Alert severity='info' onClick={() => handleSetNoteMode(true)} onClose={() => handleSave('')}>
+                {note}
+            </Alert> : null}
+            </Box>
             <Box sx={{display: 'flex', flexDirection: 'column'}}>
                 {getReserveBtn()}
                 {getSendBtn()}
@@ -78,4 +106,4 @@ function lineItem({lineItem, handleAdjust}) {
     )
 }
 
-export default lineItem;
+export default LineItem;

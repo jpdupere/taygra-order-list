@@ -43,14 +43,28 @@ function App() {
       },
       body: JSON.stringify(adjustments)
     });
-    for (let i = 0; i < 10000; i++){}
     if (response.status !== 200) {
       return setLineItems(lineItems.map(li => li.uid === uid ? adjustQty(li, adjustments, true) : li));
     };
   }
 
+  const handleSetNote = async (uid, note) => {
+    const response = await fetch(`/line-items/${uid}`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({note})
+    });
+    if (response.status !== 200) {
+      return lineItems.filter(li => li.uid === uid)[0].note;
+    }
+    setLineItems(lineItems.map(li => li.uid === uid ? {...li, note} : li));
+    return note;
+}
+
   const listItems = lineItems.filter(li => !(li.sentQty === li.qty && li.reservedQty === 0) || !hideSent).sort((a, b) => b.uid.localeCompare(a.uid)).map(lineItem => 
-    <LineItem key={lineItem.uid.replace('.jpg', '_150x.jpg')} lineItem={lineItem} handleAdjust={handleAdjust}></LineItem>
+    <LineItem key={lineItem.uid.replace('.jpg', '_150x.jpg')} lineItem={lineItem} handleAdjust={handleAdjust} handleSetNote={handleSetNote}></LineItem>
   );
 
   const exportData = lineItems.filter(li => li.reservedQty > 0).flatMap(li => {

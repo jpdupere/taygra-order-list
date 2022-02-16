@@ -1,4 +1,4 @@
-const { getLineItems, adjustQty } = require('./db.js');
+const { getLineItems, adjustQty, updateLineItem } = require('./db.js');
 require('./update-data');
 const express = require('express');
 const app = express();
@@ -16,7 +16,8 @@ app.get('/line-items', (req, res) => {
             qty: order.qty,
             reservedQty: order.reservedQty,
             sentQty: order.sentQty,
-            imgSrc: order.imgSrc
+            imgSrc: order.imgSrc,
+            note: order.note
         };
     });
     res.json(data);
@@ -30,10 +31,17 @@ app.post('/line-items/:uid', (req, res) => {
         return res.status(400).send();
     }
     const data = req.body;
-    if (!data.reservedQty && !data.sentQty) {
+    if (!data) {
         return res.status(400).send();
     }
-    adjustQty(uid, data);
+    if (data.reservedQty || data.sentQty) {
+        adjustQty(uid, data);
+    } else if (Object.keys(data).includes('note')) {
+        updateLineItem(uid, {note: data.note});
+    } else {
+        return res.status(400).send();
+    }
+    
     res.status(200).send();
 })
 
