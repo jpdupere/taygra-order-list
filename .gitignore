@@ -1,4 +1,4 @@
 secret.json
 **/node_modules
 .DS_Store
-database/
+database/**
