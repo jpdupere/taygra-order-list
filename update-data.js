@@ -1,12 +1,13 @@
 'use strict';
 
+const { addRecord } = require('./csv.js');
 const { getLineItems, addOrReplaceLineItem, updateLineItem, removeLineItem } = require('./db.js');
 const { getOrderList, getBrazilLineItems, getVariantImgSrc } = require('./shopify_api.js');
 
 const extractData = async (orderList) => {
     const lineItems = {};
     for (const order of orderList) {
-        console.log(`Extracting data for order ${order.order_number}`);
+        // console.log(`Extracting data for order ${order.order_number}`);
         // get a map of lineItems which locations are in Brazil
         const brazilLineItems = await getBrazilLineItems(order.id);
         for (const lineItem of order.line_items) {
@@ -25,6 +26,8 @@ const extractData = async (orderList) => {
                 // create a unique id with the ordernumber and sku
                 const lineItemUid = `${order.order_number}|${lineItem.sku}`;
                 lineItems[lineItemUid] = record;
+                // create csv record
+                //addRecord(record);
             }
         }
     }
@@ -33,6 +36,7 @@ const extractData = async (orderList) => {
 
 const updateDb = async () => {
     const orderList = await getOrderList();
+    console.log('Extracting data...');
     const lineItems = await extractData(orderList);
     console.log(`${Object.keys(lineItems).length} line-items to fulfill from Brazil`);
     for (const lineItemUid in lineItems) {
@@ -73,12 +77,14 @@ const smoothlyUpdateDb = async () => {
 }
 
 (async () => {
+    const delay = 5 * 60 * 1000; // 30 min
+    const nextRun = new Date(Date.now() + delay);
     await smoothlyUpdateDb();
-    const delay = 30 * 60 * 1000; // 30 min
-    console.log(`Next run: ${new Date(Date.now() + delay).toString()}`);
+    console.log(`Next run: ${nextRun.toString()}`);
 
     setInterval(async () => {
+        const nextRun = new Date(Date.now() + delay);
         await smoothlyUpdateDb();
-        console.log(`Next run: ${new Date(Date.now() + delay).toString()}`);
+        console.log(`Next run: ${nextRun.toString()}`);
     }, delay);
 })()

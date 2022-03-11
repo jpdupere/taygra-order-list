@@ -4,7 +4,7 @@
   "description": "Fetch a list of orders from the shopify API and generates a list of items to ship along with the order number and customer email",
   "main": "index.js",
   "scripts": {
-    "start": "node ./index",
+    "start": "node ./server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jean-Philippe Dupéré",

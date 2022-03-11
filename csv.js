@@ -1,8 +1,7 @@
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const csvWriter = createCsvWriter({
-    path: './output/brazil-orders.csv',
+    path: './csv/brazil-orders.csv',
     header: [
-        {id: 'title', title: 'Title'},
         {id: 'number', title: '#Order'},
         {id: 'sku', title: 'SKU'},
         {id: 'qty', title: 'Qty'},
@@ -13,9 +12,8 @@ const csvWriter = createCsvWriter({
     ]
 });
 
-const addRecord = async ({ title, number, sku, qty, firstName, lastName, email, phone }) => {     
-    console.log('writing:', title);
-    await csvWriter.writeRecords([{ title, number, sku, qty, firstName, lastName, email, phone }]);
+const addRecord = async ({ number, sku, qty, firstName, lastName, email, phone }) => {     
+    await csvWriter.writeRecords([{ number, sku, qty, firstName, lastName, email, phone }]);
 }
 
 module.exports = { addRecord }
