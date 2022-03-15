@@ -54,6 +54,7 @@ function LineItem({lineItem, handleAdjust, handleSetNote}) {
     }
 
     const getSendBtn = () => {
+        return null;
         if (lineItem.reservedQty > 0) {
             return <Button size='small' color='secondary' onClick={() => handleAdjust(lineItem.uid, {sentQty: 1, reservedQty: -1})}>Envoyer</Button>
         }
