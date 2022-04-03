@@ -22,7 +22,8 @@ function App() {
   }
 
   useEffect(() => {
-    const interval = setInterval(fetchLineItems, 15*60*1000); //Line items will refresh every hour
+    fetchLineItems();
+    const interval = setInterval(fetchLineItems, 5*60*1000); //Line items will refresh every hour
     return () => clearInterval(interval);
   }, []);
 
