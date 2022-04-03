@@ -19,12 +19,12 @@ function App() {
     const res = await fetch('/line-items')
     const li = await res.json();
     setLineItems(li);
-    setTimeout(() => fetchLineItems(), 3600*1000); //Line items will refresh every hour
   }
 
   useEffect(() => {
-    fetchLineItems();
-  }, [fetchLineItems]);
+    const interval = setInterval(fetchLineItems, 15*60*1000); //Line items will refresh every hour
+    return () => clearInterval(interval);
+  }, []);
 
   const adjustQty = (lineItem, adjustments, revert) => {
     const multiplier = revert ? -1 : 1;
@@ -63,9 +63,26 @@ function App() {
     return note;
 }
 
-  const listItems = lineItems.filter(li => !(li.sentQty === li.qty && li.reservedQty === 0) || !hideSent).sort((a, b) => b.uid.localeCompare(a.uid)).map(lineItem => 
+  const listItems = lineItems.filter(li => !(li.sentQty === li.qty && li.reservedQty === 0) || !hideSent).sort((a, b) => {
+    if ((a.reservedQty || a.sentQty) !== (b.reservedQty || b.sentQty)) {
+      if (a.reservedQty || a.sentQty) {
+        return 1;
+      }
+      return -1;
+    } else {
+      if (!!a.note !== !!b.note) {
+        if (a.note) {
+          return 1;
+        }
+        return -1;
+      }
+    }
+    return b.uid.localeCompare(a.uid)
+  }).map(lineItem => 
     <LineItem key={lineItem.uid.replace('.jpg', '_150x.jpg')} lineItem={lineItem} handleAdjust={handleAdjust} handleSetNote={handleSetNote}></LineItem>
   );
+
+  console.log(listItems);
 
   const exportData = lineItems.filter(li => li.reservedQty > 0).flatMap(li => {
     const lines = []
