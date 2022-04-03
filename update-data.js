@@ -1,10 +1,11 @@
 'use strict';
 
-const { addRecord } = require('./csv.js');
+const { addRecord, resetCSVFile } = require('./csv.js');
 const { getLineItems, addOrReplaceLineItem, updateLineItem, removeLineItem } = require('./db.js');
 const { getOrderList, getBrazilLineItems, getVariantImgSrc } = require('./shopify_api.js');
 
 const extractData = async (orderList) => {
+    resetCSVFile(); // clear the CSV File
     const lineItems = {};
     for (const order of orderList) {
         // console.log(`Extracting data for order ${order.order_number}`);
@@ -27,7 +28,7 @@ const extractData = async (orderList) => {
                 const lineItemUid = `${order.order_number}|${lineItem.sku}`;
                 lineItems[lineItemUid] = record;
                 // create csv record
-                //addRecord(record);
+                addRecord(record);
             }
         }
     }
