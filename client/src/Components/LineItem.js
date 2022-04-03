@@ -33,14 +33,14 @@ function LineItem({lineItem, handleAdjust, handleSetNote}) {
 
     const getReservedStatus = () => {
         if (lineItem.reservedQty > 0) {
-            let msg = `${lineItem.reservedQty} sur ${lineItem.qty} réservée${lineItem.reservedQty > 1 ? 's' : ''}`;
+            let msg = `${lineItem.reservedQty} sur ${lineItem.qty} séparée${lineItem.reservedQty > 1 ? 's' : ''}`;
             let color = 'warning';
             if (lineItem.reservedQty === lineItem.qty - lineItem.sentQty) {
                 color = 'success';
                 if (lineItem.reservedQty > 1) {
-                    msg = `${lineItem.reservedQty} réservées`;
+                    msg = `${lineItem.reservedQty} séparées`;
                 } else {
-                    msg = `Réservée`;
+                    msg = `Séparée`;
                 }
             }
             return <Chip color={color} size='small' label={msg} onDelete={() => handleAdjust(lineItem.uid, {reservedQty: -1})} />
@@ -49,7 +49,7 @@ function LineItem({lineItem, handleAdjust, handleSetNote}) {
 
     const getReserveBtn = () => {
         if (lineItem.reservedQty + lineItem.sentQty < lineItem.qty) {
-            return <Button size='small' onClick={() => handleAdjust(lineItem.uid, {reservedQty: 1})}>Réserver</Button>
+            return <Button size='small' onClick={() => handleAdjust(lineItem.uid, {reservedQty: 1})}>Séparer</Button>
         }
     }
 
