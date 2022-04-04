@@ -65,20 +65,37 @@ function App() {
 }
 
   const listItems = lineItems.filter(li => !(li.sentQty === li.qty && li.reservedQty === 0) || !hideSent).sort((a, b) => {
-    if ((a.reservedQty || a.sentQty) !== (b.reservedQty || b.sentQty)) {
+    //if (a.number === 4468 || b.number === 4468) debugger;
+    if (!!(a.reservedQty || a.sentQty) !== !!(b.reservedQty || b.sentQty)) {
+      // One is reserved or sent, the other not
       if (a.reservedQty || a.sentQty) {
         return 1;
       }
       return -1;
     } else {
-      if (!!a.note !== !!b.note) {
-        if (a.note) {
-          return 1;
+      // Both are either reserved or sent, or not
+      if (a.reservedQty || a.sentQty) {
+        // Both are reserved or sent
+        if ((a.sentQty + a.reservedQty > a.qty) !== (b.sentQty + b.reservedQty > b.qty)) {
+          // One is over-reserved and the other not
+          if (b.sentQty + b.reservedQty > b.qty) {
+            return 1;
+          }
+          return -1;
         }
-        return -1;
+      } else {
+        // Both are not reserved or sent
+        if (!!a.note !== !!b.note) {
+          // One has note and the other not
+          if (a.note) {
+            return 1;
+          }
+          return -1;
+        }
       }
     }
-    return b.uid.localeCompare(a.uid)
+    // Default sort
+    return b.number - a.number;
   }).map(lineItem => 
     <LineItem key={lineItem.uid.replace('.jpg', '_150x.jpg')} lineItem={lineItem} handleAdjust={handleAdjust} handleSetNote={handleSetNote}></LineItem>
   );
