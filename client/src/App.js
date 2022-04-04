@@ -83,8 +83,6 @@ function App() {
     <LineItem key={lineItem.uid.replace('.jpg', '_150x.jpg')} lineItem={lineItem} handleAdjust={handleAdjust} handleSetNote={handleSetNote}></LineItem>
   );
 
-  console.log(listItems);
-
   const exportData = lineItems.filter(li => li.reservedQty > 0).flatMap(li => {
     const lines = []
     for (let i = 0; i < li.reservedQty; i++) {
