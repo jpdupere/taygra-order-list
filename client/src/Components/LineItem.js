@@ -6,7 +6,7 @@ import { Alert, Badge, Button, Chip, Divider, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
 
-function LineItem({lineItem, handleAdjust, handleSetNote}) {
+function LineItem({lineItem, sendingMode, handleAdjust, handleSetNote}) {
     const [noteMode, setNoteMode] = useState(false);
     const [note, setNote] = useState(lineItem.note || '');
 
@@ -48,13 +48,14 @@ function LineItem({lineItem, handleAdjust, handleSetNote}) {
     }
 
     const getReserveBtn = () => {
+        if (sendingMode) return null;
         if (lineItem.reservedQty + lineItem.sentQty < lineItem.qty) {
             return <Button size='small' onClick={() => handleAdjust(lineItem.uid, {reservedQty: 1})}>Séparer</Button>
         }
     }
 
     const getSendBtn = () => {
-        return null;
+        if (!sendingMode) return null;
         if (lineItem.reservedQty > 0) {
             return <Button size='small' color='secondary' onClick={() => handleAdjust(lineItem.uid, {sentQty: 1, reservedQty: -1})}>Envoyer</Button>
         }

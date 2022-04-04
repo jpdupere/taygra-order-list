@@ -7,7 +7,7 @@ import { CSVLink } from 'react-csv';
 
 function App() {
   const [lineItems, setLineItems] = useState([]);
-  const [hideSent, setHideSent] = useState(true);
+  const [sendingMode, setSendingMode] = useState(false);
 
   const theme = createTheme({
     palette: {
@@ -64,7 +64,7 @@ function App() {
     return note;
 }
 
-  const listItems = lineItems.filter(li => !(li.sentQty === li.qty && li.reservedQty === 0) || !hideSent).sort((a, b) => {
+  const listItems = lineItems.sort((a, b) => {
     //if (a.number === 4468 || b.number === 4468) debugger;
     if (!!(a.reservedQty || a.sentQty) !== !!(b.reservedQty || b.sentQty)) {
       // One is reserved or sent, the other not
@@ -97,7 +97,7 @@ function App() {
     // Default sort
     return b.number - a.number;
   }).map(lineItem => 
-    <LineItem key={lineItem.uid.replace('.jpg', '_150x.jpg')} lineItem={lineItem} handleAdjust={handleAdjust} handleSetNote={handleSetNote}></LineItem>
+    <LineItem key={lineItem.uid.replace('.jpg', '_150x.jpg')} lineItem={lineItem} sendingMode={sendingMode} handleAdjust={handleAdjust} handleSetNote={handleSetNote}></LineItem>
   );
 
   const exportData = lineItems.filter(li => li.reservedQty > 0).flatMap(li => {
@@ -126,7 +126,7 @@ function App() {
           >
             TAYGRA USA - COMMANDES
           </Typography>
-          <Button onClick={() => setHideSent(!hideSent)}>{`${hideSent ? 'Afficher' : 'Masquer'} les commandes envoyées`}</Button>
+          <Button onClick={() => setSendingMode(!sendingMode)}>{`${sendingMode ? 'Désactiver' : 'Activer'} le mode Envoi`}</Button>
           <CSVLink data={exportData} onClick={() => exportData.length ? true : false} filename={"commande-taygra-usa.csv"} className={'no-decoration'}><Button color="secondary" disabled={!exportData.length}>Exporter CSV</Button></CSVLink>
         </Toolbar>
       </AppBar>
