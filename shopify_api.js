@@ -92,6 +92,7 @@ const getImageSrc = async (product_id, image_id) => {
 const getVariantImgSrc = async (variantId) => {
     const variantUrl = baseUrl + apiUrl + `variants/${variantId}.json?fields=product_id,image_id`;
     const variantResponse = await request(variantUrl);
+    
     const {variant} = await variantResponse.json();
     if (!variant) console.log(variantResponse);
     const imageSrc = getImageSrc(variant.product_id, variant.image_id);

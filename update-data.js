@@ -45,7 +45,12 @@ const updateDb = async () => {
         if (!db[lineItemUid]) {
             // line-item doesn't exist in db
             // fetch the product image url
-            const imgSrc = await getVariantImgSrc(lineItems[lineItemUid].variantId);
+            let imgSrc;
+            try {
+                imgSrc = await getVariantImgSrc(lineItems[lineItemUid].variantId);
+            } catch (e) {
+                throw new Error(`Can't get variant image for lineItemUid ${lineItemUid}`);
+            }
             console.log(`Fetched image source for line-item ${lineItemUid}: ${imgSrc}`);
             // update db
             addOrReplaceLineItem(lineItemUid, {...lineItems[lineItemUid], imgSrc, reservedQty: 0, sentQty: 0});
