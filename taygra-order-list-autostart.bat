@@ -1,1 +1,2 @@
-PORT=801 node server.js
+set PORT=801
+node server.js
