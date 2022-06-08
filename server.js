@@ -69,12 +69,14 @@ app.get('/emails', (req, res) => {
         return acc;
     }, []);
 
-    const replacer = (key, value) => value === null ? null : value // specify how you want to handle null values here
+    const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
     const header = Object.keys(data[0])
     const csv = [
     header.join(','), // header row first
     ...data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','))
     ].join('\r\n');
+    res.header('Content-Type', 'text/csv');
+    res.attachment(`Brazil Orders Email List ${Intl.DateTimeFormat('en-CA', {month:'short', year:'numeric'}).format(new Date().setMonth(new Date().getMonth() -1))}.csv`);
     res.send(csv);
 });
 
