@@ -43,7 +43,40 @@ app.post('/line-items/:uid', (req, res) => {
     }
     
     res.status(200).send();
-})
+});
+
+app.get('/emails', (req, res) => {
+    const data = Object.entries(getLineItems()).map(([uid, order]) => {
+        return {
+            number: order.number,
+            sentQty: order.sentQty,
+            firstName: order.firstName,
+            lastName: order.lastName,
+            email: order.email,
+            phone: order.phone
+        };
+    }).reduce((acc, curr) => {
+        if (curr.sentQty > 0) {
+            const index = acc.findIndex(elem => elem.email === curr.email);
+            if (index >= 0) {
+                // element email is already in the list
+                acc[index].sentQty += curr.sentQty;
+            } else {
+                // element email is not yet in the list
+                return [...acc, curr];
+            }
+        }
+        return acc;
+    }, []);
+
+    const replacer = (key, value) => value === null ? null : value // specify how you want to handle null values here
+    const header = Object.keys(data[0])
+    const csv = [
+    header.join(','), // header row first
+    ...data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','))
+    ].join('\r\n');
+    res.send(csv);
+});
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);
