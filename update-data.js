@@ -8,7 +8,7 @@ const extractData = async (orderList) => {
     resetCSVFile(); // clear the CSV File
     const lineItems = {};
     for (const order of orderList) {
-        // console.log(`Extracting data for order ${order.order_number}`);
+        console.log(`Extracting data for order ${order.order_number}`);
         // get a map of lineItems which locations are in Brazil
         const brazilLineItems = await getBrazilLineItems(order.id);
         for (const lineItem of order.line_items) {
@@ -41,6 +41,7 @@ const updateDb = async () => {
     const lineItems = await extractData(orderList);
     console.log(`${Object.keys(lineItems).length} line-items to fulfill from Brazil`);
     for (const lineItemUid in lineItems) {
+        //if (lineItemUid === "4611|MONTANTE_FLORAL_STRASS-41") debugger;
         const db = getLineItems();
         if (!db[lineItemUid]) {
             // line-item doesn't exist in db

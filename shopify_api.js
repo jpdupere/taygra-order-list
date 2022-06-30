@@ -57,7 +57,7 @@ const getBrazilLineItems = async (orderId) => {
     const { fulfillment_orders } = await response.json();
     let brazilLineItems = {};
     for (const fo of fulfillment_orders) {
-        if (fo.status === 'open' && fo.assigned_location_id === brazilLocationId) {
+        if ((fo.status === 'open' || fo.status === 'in_progress') && fo.assigned_location_id === brazilLocationId) {
             for (const li of fo.line_items) {
                 brazilLineItems[li.line_item_id] = true;
             }
@@ -93,7 +93,11 @@ const getVariantImgSrc = async (variantId) => {
     const variantUrl = baseUrl + apiUrl + `variants/${variantId}.json?fields=product_id,image_id`;
     const variantResponse = await request(variantUrl);
     
-    const {variant} = await variantResponse.json();
+    const {variant, errors} = await variantResponse.json();
+    if (errors === "Not Found") {
+        console.log(`Variant image at ${variantUrl}: Not Found`);
+        return '';
+    }
     if (!variant) console.log(variantResponse);
     const imageSrc = getImageSrc(variant.product_id, variant.image_id);
     return imageSrc;
