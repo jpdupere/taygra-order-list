@@ -8,7 +8,7 @@ const extractData = async (orderList) => {
     resetCSVFile(); // clear the CSV File
     const lineItems = {};
     for (const order of orderList) {
-        console.log(`Extracting data for order ${order.order_number}`);
+        // console.log(`Extracting data for order ${order.order_number}`);
         // get a map of lineItems which locations are in Brazil
         const brazilLineItems = await getBrazilLineItems(order.id);
         for (const lineItem of order.line_items) {
