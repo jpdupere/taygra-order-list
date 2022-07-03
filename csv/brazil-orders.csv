@@ -1,4 +1,11 @@
 #Order,SKU,Qty,First Name,Last Name,Email,Phone
+5085,CORRIDALTA_N&B-41,1,Joe,Forte,jfortejr@gmail.com,
+5084,BLANC_UNI-37,1,Suo,Lien,liensuo@gmail.com,
+5083,CORRIDA_MARRON-39,1,Amanda,Ho,Memyselfandi94@gmail.com,
+5081,MONTANTE_BLEU-NOIR-38,1,Emily,Haug,emilyhaug@gmail.com,
+5080,SAC-BANANE,1,Corina,Tamas,corina.email@gmail.com,
+5078,CROSSFEET_NOIR_STRASS-36,1,Kylee,Chang,kyleec@gmail.com,
+5077,CORRIDA_BLEU_ROYAL-39,1,Laura,Hunter,laurahcomputing@gmail.com,
 5076,MONTANTE_BLEU_MARINE_GLOSS-42,1,Miroslav,Matusek,miro.matusek@gmail.com,
 5075,MONTANTE_BLEU_MARINE_GLOSS-41,1,Matthew,Bamford-King,matthew.bamford.king@gmail.com,
 5074,CORRIDA_BLEU_ROYAL-39,1,Jarian,Cottingham,cottinghamja@gmail.com,
@@ -15,7 +22,7 @@
 5055,CORRIDA_NUDE-40,1,Linda,Caplan,rnlinda21045@yahoo.com,+13862622755
 5054,SEMELLE-EVA-35,3,Celeste,Li,daeli0@yahoo.com,
 5054,MONTANTE_TOILE_CAMION-35,1,Celeste,Li,daeli0@yahoo.com,
-5051,CORRIDA_ROSE-38,1,Julianna,Messineo,juliannamessineo@gmail.com,
+5051,CORRIDA_NOIR-38,1,Julianna,Messineo,juliannamessineo@gmail.com,
 5049,MONTANTE_BB_MARRON-41,1,Marie,Winter,marieannawinter@gmail.com,
 5049,CLASSICA_COTON_BEIGE-41,1,Marie,Winter,marieannawinter@gmail.com,
 5048,MONTANTE_BORDEAUX_CHAMOIS-40,1,Daniela,Capobianco,dgecapobianco@gmail.com,
@@ -25,8 +32,8 @@
 5040,NOIR_UNI_GLOSS-37,1,sarah,sweeney,sarah.anne.sweeney@gmail.com,
 5039,CROSSFEET_GRAPHITE-42,1,The,Godlobster,godlobster@gmail.com,
 5036,CORRIDA_BLEU_TURQUOISE-46,1,Allison,Hrovat,sales@dancevegan.com,
-5035,NOIR_UNI_GLOSS-41,1,Zoey,Reese,zoeyrreese@gmail.com,+12158048818
 5035,CORRIDA_BLEU_MARINE-41,1,Zoey,Reese,zoeyrreese@gmail.com,+12158048818
+5035,NOIR_UNI_GLOSS-41,1,Zoey,Reese,zoeyrreese@gmail.com,+12158048818
 5033,CORRIDA_NOIR-38,1,Xochi,Richardson,xrich6@gmail.com,
 5031,MONTANTE_BEIGE_CHAMOIS-33,1,M Rosalind Jamie,Diaz,celine.diaz2@gmail.com,
 5030,BLANC_UNI_ELASTIQUE-38,1,Ashley,Broussard,ashleyybr@hotmail.com,
@@ -41,12 +48,12 @@
 5009,CROSSFEET_NOIR_SPRAY-37,1,Sophia,Wang,sophiaw8661@gmail.com,
 5006,CORRIDA_JAGUAR-37,1,Ashley,M Gray,Phoenixdh@gmail.com,
 5003,BLANC-OR-38,1,Belinda,Chen,Blubei85@hotmail.com,+18638991952
+5001,MONTANTE_ANGLETERRE-39,1,Jessica,Wrape,redrosefashions@yahoo.com,
 5001,MONTANTE_GRIS-GRAPHITE-MARINE-39,1,Jessica,Wrape,redrosefashions@yahoo.com,
 5001,MONTANTE_BLEU-NOIR-36,1,Jessica,Wrape,redrosefashions@yahoo.com,
-5001,MONTANTE_ANGLETERRE-39,1,Jessica,Wrape,redrosefashions@yahoo.com,
 4999,CORRIDA_VIOLET-40,1,Simone,Lee,simonelee24@gmail.com,
-4997,MONTANTE_ROSE_GLITTER-39,1,Madhu,Kumaraswamy,madhu.prasha@gmail.com,
 4997,SANDALE_BOEMIA_CARAMEL-39,1,Madhu,Kumaraswamy,madhu.prasha@gmail.com,
+4997,MONTANTE_ROSE_GLITTER-39,1,Madhu,Kumaraswamy,madhu.prasha@gmail.com,
 4997,NOIR-BONFIM-39,1,Madhu,Kumaraswamy,madhu.prasha@gmail.com,
 4996,MONTANTE_BB_BEIGE-41,1,Amarbir,Bakhshi,gio.tasha@gmail.com,
 4993,NOIR-BONFIM-41,1,Philippe,Truche,fa5h06obp@mozmail.com,
@@ -59,8 +66,8 @@
 4979,MONTANTE_BEIGE_CHAMOIS-40,1,Anne Luisa,Boronowsky,lboronowsky@unitybox.de,
 4971,MONTANTE_NOIR_UNI-44,1,Michael,Merrill,mmspectra@outlook.com,+17029557006
 4970,MONTANTE_NOIR_GLOSS_VERT-44,1,Michael,Merrill,mmspectra@outlook.com,+17029557006
-4969,CORRIDA_BLEU_ROYAL-36,1,VALERIA,Weiss,lera.weiss10@gmail.com,
 4969,NOIR_UNI_GLOSS-36,1,VALERIA,Weiss,lera.weiss10@gmail.com,
+4969,CORRIDA_BLEU_ROYAL-36,1,VALERIA,Weiss,lera.weiss10@gmail.com,
 4969,BALLERINE_BEIGE-OR-36,1,VALERIA,Weiss,lera.weiss10@gmail.com,
 4968,BLANC-NOIR-45,1,Guillaume,Simard,takemyoke@gmail.com,
 4968,CHOCOLAT-BLEU_CIEL_VINTAGE-45,1,Guillaume,Simard,takemyoke@gmail.com,
@@ -84,5 +91,4 @@
 4795,ESPADRILLE_TOILE_BEIGE-39,1,Maggie,Moreno,margaret.m.moreno@gmail.com,
 4795,ESPADRILLE_U_BEIGE_GRIS-39,1,Maggie,Moreno,margaret.m.moreno@gmail.com,
 4764,JAMAIQUE-38,1,Tre,Wentling,wentling.t@gmail.com,
-4611,MONTANTE_FLORAL_STRASS-41,1,Karen,Chiasson,chikanniemal@gmail.com,
 4445,NOIR-ARGENT-36,1,Panda,Panda,mysticnightangel@hotmail.com,

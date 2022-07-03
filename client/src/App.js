@@ -100,7 +100,7 @@ function App() {
     <LineItem key={lineItem.uid.replace('.jpg', '_150x.jpg')} lineItem={lineItem} sendingMode={sendingMode} handleAdjust={handleAdjust} handleSetNote={handleSetNote}></LineItem>
   );
 
-  const exportData = lineItems.filter(li => li.reservedQty > 0).flatMap(li => {
+  const exportData = lineItems.filter(li => li.reservedQty > 0 && li.qty > 0).flatMap(li => {
     const lines = []
     for (let i = 0; i < li.reservedQty; i++) {
       lines.push({OrderNumber: li.number, SKU: li.sku});
