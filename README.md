@@ -11,5 +11,5 @@ ATTENTION: Don't forget to review the 'on hold' fulfillment status since they wi
 
 ## Run - Production
 
-1. Build the production client `yarn build` to be served from the `client/build` directory
+1. Build the production client `yarn build` from the `client/` directory to be served from the `client/build` directory
 2. Start the server with `node server.js`
