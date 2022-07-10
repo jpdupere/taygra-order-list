@@ -37,7 +37,7 @@ function App() {
 
   const handleAdjust = async (uid, adjustments) => {
     setLineItems(lineItems.map(li => li.uid === uid ? adjustQty(li, adjustments) : li));
-    const response = await fetch(`/line-items/${uid}`, {
+    const response = await fetch(`/line-items/${encodeURIComponent(uid)}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ function App() {
   }
 
   const handleSetNote = async (uid, note) => {
-    const response = await fetch(`/line-items/${uid}`, {
+    const response = await fetch(`/line-items/${encodeURIComponent(uid)}`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
